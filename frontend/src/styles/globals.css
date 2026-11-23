@@ -1,0 +1,420 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-palladian: #EEE9DF;
+  --color-oatmeal: #C9C1B1;
+  --color-blue-fantastic: #2C3B4D;
+  --color-burning-flame: #FFB162;
+  --color-truffle: #A35139;
+  --color-abyssal: #1B2632;
+  color-scheme: light;
+}
+.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background: rgba(255, 177, 98, 0.45);
+    color: #1B2632;
+  }
+  /* One consistent keyboard focus treatment everywhere. */
+  :focus-visible {
+    outline: 2px solid #FFB162;
+    outline-offset: 2px;
+  }
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+}
+
+/* Tabular figures so columns of numbers line up. */
+.num-mono,
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+.num-mono {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+.code-id {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+@layer components {
+  /* ---------- Buttons ---------- */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-1.5 whitespace-nowrap select-none
+      h-8 px-3 rounded text-[13px] font-medium leading-none
+      border transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-out
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(0.5px);
+  }
+  .btn svg {
+    @apply w-3.5 h-3.5 shrink-0;
+  }
+  .btn-sm {
+    @apply h-7 px-2.5 text-xs;
+  }
+  .btn-lg {
+    @apply h-11 px-5 text-[15px];
+  }
+  .btn-icon {
+    @apply w-8 px-0;
+  }
+  .btn-icon.btn-sm {
+    @apply w-7;
+  }
+
+  /* Primary: navy on light surfaces, orange on dark surfaces. */
+  .btn-primary {
+    @apply bg-blue-fantastic text-palladian-light border-blue-fantastic-dark;
+    box-shadow: inset 0 1px 0 rgba(238, 233, 223, 0.08), 0 1px 1px rgba(27, 38, 50, 0.18);
+  }
+  .btn-primary:hover:not(:disabled) {
+    @apply bg-blue-fantastic-light;
+  }
+  .btn-primary:active:not(:disabled) {
+    @apply bg-blue-fantastic-dark;
+    box-shadow: inset 0 1px 2px rgba(19, 28, 37, 0.35);
+  }
+  .dark .btn-primary,
+  .btn-accent {
+    @apply bg-burning-flame text-abyssal border-burning-flame-dark;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 1px rgba(19, 28, 37, 0.3);
+  }
+  .dark .btn-primary:hover:not(:disabled),
+  .btn-accent:hover:not(:disabled) {
+    @apply bg-burning-flame-light;
+  }
+  .dark .btn-primary:active:not(:disabled),
+  .btn-accent:active:not(:disabled) {
+    @apply bg-burning-flame-dark;
+    box-shadow: inset 0 1px 2px rgba(19, 28, 37, 0.25);
+  }
+
+  /* Secondary: quiet bordered control. */
+  .btn-secondary {
+    @apply bg-palladian-light text-abyssal border-oatmeal;
+    box-shadow: 0 1px 0 rgba(27, 38, 50, 0.04);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    @apply bg-palladian border-oatmeal-dark/60;
+  }
+  .btn-secondary:active:not(:disabled) {
+    @apply bg-palladian-dark;
+    box-shadow: inset 0 1px 1px rgba(27, 38, 50, 0.08);
+  }
+  .dark .btn-secondary {
+    @apply bg-abyssal-light text-palladian border-blue-fantastic-light;
+  }
+  .dark .btn-secondary:hover:not(:disabled) {
+    @apply bg-blue-fantastic border-oatmeal/40;
+  }
+  .dark .btn-secondary:active:not(:disabled) {
+    @apply bg-blue-fantastic-dark;
+  }
+
+  /* Ghost: text-only control for low-emphasis actions. */
+  .btn-ghost {
+    @apply bg-transparent border-transparent text-blue-fantastic;
+  }
+  .btn-ghost:hover:not(:disabled) {
+    @apply bg-oatmeal/30;
+  }
+  .btn-ghost:active:not(:disabled) {
+    @apply bg-oatmeal/50;
+  }
+  .dark .btn-ghost {
+    @apply text-palladian/85;
+  }
+  .dark .btn-ghost:hover:not(:disabled) {
+    @apply bg-blue-fantastic/60 text-palladian;
+  }
+
+  /* Text link with an underline that appears on hover. */
+  .text-link {
+    @apply font-medium text-blue-fantastic underline decoration-oatmeal underline-offset-[3px] hover:decoration-blue-fantastic;
+  }
+  .dark .text-link {
+    @apply text-burning-flame decoration-burning-flame/40 hover:decoration-burning-flame;
+  }
+
+  /* ---------- Form controls ---------- */
+  .field-label {
+    @apply flex items-center gap-1 mb-1.5 text-xs font-medium text-blue-fantastic dark:text-oatmeal;
+  }
+  .field-hint {
+    @apply mt-1 text-2xs text-oatmeal-dark dark:text-oatmeal/80;
+  }
+  .control {
+    @apply w-full h-8 rounded border bg-palladian-light text-[13px] text-abyssal border-oatmeal
+      px-2.5 transition-[border-color,box-shadow,background-color] duration-150
+      hover:border-oatmeal-dark/60
+      focus:outline-none focus:border-blue-fantastic focus:ring-2 focus:ring-blue-fantastic/15
+      disabled:opacity-50 disabled:cursor-not-allowed;
+    font-variant-numeric: tabular-nums;
+  }
+  .dark .control {
+    @apply bg-abyssal-dark text-palladian border-blue-fantastic-light hover:border-oatmeal/40
+      focus:border-burning-flame focus:ring-burning-flame/20;
+  }
+  .control::placeholder {
+    @apply text-oatmeal-dark/80;
+  }
+  .dark .control::placeholder {
+    @apply text-oatmeal/50;
+  }
+  .control-select {
+    @apply appearance-none pr-8 cursor-pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' stroke='%232C3B4D' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    background-size: 12px 12px;
+  }
+  .dark .control-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' stroke='%23C9C1B1' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  .control-select option {
+    @apply bg-palladian-light text-abyssal;
+  }
+  .dark .control-select option {
+    @apply bg-abyssal text-palladian;
+  }
+  .control-textarea {
+    @apply h-auto py-2 leading-relaxed resize-y;
+  }
+  input[type="date"].control::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  .dark input[type="date"].control::-webkit-calendar-picker-indicator {
+    filter: invert(0.85);
+  }
+  input[type="number"].control {
+    @apply text-center px-1.5;
+  }
+
+  .checkbox {
+    @apply appearance-none shrink-0 w-4 h-4 rounded-[3px] border border-oatmeal-dark/70 bg-palladian-light
+      cursor-pointer transition-colors duration-150 grid place-content-center
+      checked:bg-blue-fantastic checked:border-blue-fantastic;
+  }
+  .checkbox::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    transform: scale(0);
+    transition: transform 120ms ease-out;
+    background: #F8F5F0;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+  .checkbox:checked::after {
+    transform: scale(1);
+  }
+  .dark .checkbox {
+    @apply bg-abyssal-dark border-oatmeal/50 checked:bg-burning-flame checked:border-burning-flame;
+  }
+  .dark .checkbox::after {
+    background: #1B2632;
+  }
+
+  /* ---------- Segmented control / tabs ---------- */
+  .segmented {
+    @apply inline-flex items-center p-0.5 rounded-md border border-oatmeal bg-palladian-dark/60 gap-0.5;
+  }
+  .dark .segmented {
+    @apply border-blue-fantastic-light bg-abyssal-dark;
+  }
+  .segmented-item {
+    @apply h-7 px-3 rounded text-xs font-medium whitespace-nowrap text-blue-fantastic/80
+      transition-[background-color,color,box-shadow] duration-150 hover:text-abyssal;
+  }
+  .segmented-item[aria-selected="true"] {
+    @apply bg-palladian-light text-abyssal;
+    box-shadow: 0 0 0 1px rgba(201, 193, 177, 0.9), 0 1px 1px rgba(27, 38, 50, 0.06);
+  }
+  .dark .segmented-item {
+    @apply text-oatmeal hover:text-palladian;
+  }
+  .dark .segmented-item[aria-selected="true"] {
+    @apply bg-blue-fantastic text-palladian;
+    box-shadow: 0 0 0 1px rgba(58, 77, 100, 1);
+  }
+
+  /* Underlined tab row for section-level navigation. */
+  .tabrow {
+    @apply flex items-end gap-5 border-b border-oatmeal dark:border-blue-fantastic overflow-x-auto;
+  }
+  .tab {
+    @apply relative -mb-px pb-2.5 pt-1 text-[13px] font-medium whitespace-nowrap border-b-2 border-transparent
+      text-blue-fantastic/70 hover:text-abyssal transition-colors;
+  }
+  .tab[aria-selected="true"] {
+    @apply border-blue-fantastic text-abyssal;
+  }
+  .dark .tab {
+    @apply text-oatmeal hover:text-palladian;
+  }
+  .dark .tab[aria-selected="true"] {
+    @apply border-burning-flame text-palladian;
+  }
+
+  /* ---------- Surfaces ---------- */
+  .panel {
+    @apply bg-palladian-light border border-oatmeal/80 rounded-md;
+  }
+  .dark .panel {
+    @apply bg-abyssal-mid border-blue-fantastic;
+  }
+  .panel-head {
+    @apply flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-4 pt-3.5 pb-3 border-b border-oatmeal/60;
+  }
+  .dark .panel-head {
+    @apply border-blue-fantastic;
+  }
+  .panel-title {
+    @apply text-sm font-semibold text-abyssal dark:text-palladian;
+  }
+  .panel-sub {
+    @apply mt-0.5 text-xs text-oatmeal-dark dark:text-oatmeal/80 max-w-prose;
+  }
+
+  /* ---------- Tables ---------- */
+  .data-table {
+    @apply w-full text-left text-[13px] border-collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .data-table thead th {
+    @apply sticky top-0 z-[1] bg-palladian-light px-3 py-2 text-xs font-medium text-oatmeal-dark whitespace-nowrap
+      border-b border-oatmeal;
+  }
+  .dark .data-table thead th {
+    @apply bg-abyssal-mid text-oatmeal border-blue-fantastic;
+  }
+  .data-table tbody td {
+    @apply px-3 py-2 border-b border-oatmeal/40 align-middle;
+  }
+  .dark .data-table tbody td {
+    @apply border-blue-fantastic/60;
+  }
+  .data-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+  .data-table tbody tr.row-hover:hover td {
+    @apply bg-palladian/70;
+  }
+  .dark .data-table tbody tr.row-hover:hover td {
+    @apply bg-blue-fantastic/40;
+  }
+  .data-table tbody tr[aria-selected="true"] td {
+    @apply bg-palladian-dark/70;
+  }
+  .dark .data-table tbody tr[aria-selected="true"] td {
+    @apply bg-blue-fantastic/70;
+  }
+  .data-table .num {
+    @apply text-right;
+  }
+
+  /* Text tag: small bordered label, no fill colour and no dots. */
+  .tag {
+    @apply inline-flex items-center h-5 px-1.5 rounded-[3px] border border-oatmeal text-2xs font-medium text-blue-fantastic whitespace-nowrap;
+  }
+  .dark .tag {
+    @apply border-blue-fantastic-light text-oatmeal;
+  }
+  .tag-warn {
+    @apply border-truffle/40 text-truffle;
+  }
+  .dark .tag-warn {
+    @apply border-truffle-soft/40 text-truffle-soft;
+  }
+  .tag-strong {
+    @apply border-blue-fantastic/60 text-abyssal;
+  }
+  .dark .tag-strong {
+    @apply border-burning-flame/50 text-burning-flame;
+  }
+
+  .skeleton {
+    @apply rounded bg-oatmeal/30 dark:bg-blue-fantastic/50;
+    animation: skeleton-fade 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes skeleton-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* Page change: a brief opacity settle so the swap does not feel abrupt. */
+.page-enter {
+  animation: page-in 180ms ease-out both;
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Landing hero figure: the average line draws once on load. */
+.draw-in {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .draw-in { stroke-dashoffset: 0; }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 193, 177, 0.7);
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(58, 77, 100, 0.9);
+  background-clip: content-box;
+}
+
+/* Plotly hover label: match the type system. */
+.js-plotly-plot .hovertext text {
+  font-family: 'IBM Plex Sans', sans-serif !important;
+}
