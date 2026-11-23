@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "FRED & ALFRED (Demo Bundle)",
+    "kind": "demo",
+    "base_url": "https://fred.stlouisfed.org",
+    "license_note": "Bundled snapshot of Federal Reserve Bank of St. Louis public economic data. For research demonstration only.",
+    "is_demo": true
+  },
+  {
+    "id": 2,
+    "name": "yfinance Market Data (Demo Bundle)",
+    "kind": "demo",
+    "base_url": "https://finance.yahoo.com",
+    "license_note": "Research-grade unofficial Yahoo Finance daily bars. For research demonstration only.",
+    "is_demo": true
+  },
+  {
+    "id": 3,
+    "name": "Federal Reserve Board (FOMC Calendar)",
+    "kind": "demo",
+    "base_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+    "license_note": "Curated public calendar of Federal Open Market Committee meeting dates.",
+    "is_demo": true
+  }
+]
